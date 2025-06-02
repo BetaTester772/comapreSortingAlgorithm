@@ -177,7 +177,6 @@ class SortingAlgorithmMonitor:
 
             if distribution == 'random':
                 for r_interation in range(self.test_iterations):
-                    print(data)
                     # Execute algorithm and collect timing
                     execution_time = self.execute_cpp_algorithm(algorithm)
                     if execution_time > 0:

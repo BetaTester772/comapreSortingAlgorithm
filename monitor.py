@@ -27,7 +27,7 @@ class SortingAlgorithmMonitor:
 
         self.dataset_sizes = [100, 1000, 10000, 100000, 1000000]
         self.data_distributions = ['random', 'sorted', 'reverse_sorted']
-        self.test_iterations = 10
+        self.test_iterations = 100
         self.results = []
 
         # Dictionary to store pre-generated datasets

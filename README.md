@@ -28,10 +28,15 @@ this is a **simple** project to compare the performance of different sorting alg
 - Merge Sort
 - Quick Sort
 
+## test properties
+- **Data size**: 100, 1000, 10000, 100000, 1000000
+- **Data type**: Random, Sorted, Reversed
+- **iterations**: 100
+
 ## test environment
-- CPT: VM.Standard.A1.flex
-- OS: Ubuntu 24.04
-- GCC: 13.3.0
+- **CPT**: VM.Standard.A1.flex
+- **OS**: Ubuntu 24.04
+- **GCC**: 13.3.0
 
 ## test results
 ~~preparing~~

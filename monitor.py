@@ -135,7 +135,7 @@ class SortingAlgorithmMonitor:
                     input=open('temp/input.txt', 'r').read(),
                     capture_output=True,
                     text=True,
-                    timeout=30  # 30 second timeout
+                    timeout=3  # 3 second timeout
             )
 
             if result.returncode == 0:
@@ -222,7 +222,7 @@ class SortingAlgorithmMonitor:
 
                     if distribution == 'random':
                         print(
-                            f"  [{current_test}/{total_tests}] Size: {size}, Distribution: {distribution} (using {self.test_iterations} pre-generated datasets)")
+                                f"  [{current_test}/{total_tests}] Size: {size}, Distribution: {distribution} (using {self.test_iterations} pre-generated datasets)")
                     else:
                         print(f"  [{current_test}/{total_tests}] Size: {size}, Distribution: {distribution}")
 

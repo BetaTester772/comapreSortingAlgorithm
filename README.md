@@ -49,7 +49,7 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 - **OS**: Ubuntu 24.04
 - **GCC**: 13.3.0
 
-## [TEST RESULTS]([monitor_py_output.txt](result/monitor_py_output.txt))
+## [TEST RESULTS](result/monitor_py_output.txt)
 
 full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 

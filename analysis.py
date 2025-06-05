@@ -658,7 +658,10 @@ class SortingAlgorithmAnalyzer:
         print("✓ LaTeX tables saved to 'latex_tables.tex'")
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function to run the sorting algorithm analysis
+    """
     analyzer = SortingAlgorithmAnalyzer()
     if analyzer.load_data():
         analyzer.analyze_theory_vs_practice_gap()
@@ -668,3 +671,7 @@ if __name__ == "__main__":
         analyzer.generate_research_oriented_report()
     else:
         print("Data loading failed. Please check the data files.")
+
+
+if __name__ == "__main__":
+    main()

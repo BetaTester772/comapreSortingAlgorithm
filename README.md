@@ -1,8 +1,7 @@
 # Compare Sorting Alrgorithms
 
-**NOTE**: This is a **simple** project to compare the performance of different sorting algorithms in C++ for writing in
-SKKU
-English Writing(GEDG001) class
+**NOTE**: This is a **simple** project comparing sorting algorithm performance for an experiment report in SKKU’s
+English Writing (GEDG001) class.
 
 ## HOW TO RUN
 

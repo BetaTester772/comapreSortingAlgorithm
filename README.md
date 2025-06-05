@@ -51,7 +51,7 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 - **Kernel**: Linux 6.8.0-1026-oracle
 - **GCC**: 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04)
 
-## [TEST RESULTS](result/monitor_py_output.txt)
+## [TEST RESULTS](analysis/monitor_py_output.txt)
 
 full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
@@ -270,11 +270,11 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 ---
 
-## [TEST ANALYSIS](result/analysis_py_output.txt)
+## [TEST ANALYSIS](analysis/analysis_py_output.txt)
 
 ### THEORY VS PRACTICE: EMPIRICAL COMPLEXITY ANALYSIS
 
-![theory_vs_practice_analysis.png](result/theory_vs_practice_analysis.png)
+![theory_vs_practice_analysis.png](analysis/theory_vs_practice_analysis.png)
 
 #### Complexity Analysis Summary
 
@@ -289,7 +289,7 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 ### CACHE EFFECTS AND MEMORY LOCALITY ANALYSIS
 
-![cache_effects_analysis.png](result/cache_effects_analysis.png)
+![cache_effects_analysis.png](analysis/cache_effects_analysis.png)
 
 #### Cache Efficiency Summary
 
@@ -304,13 +304,13 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 ### PRACTICAL PERFORMANCE ZONES FOR ALGORITHM SELECTION
 
-![practical_performance_zones.png](result/practical_performance_zones.png)
+![practical_performance_zones.png](analysis/practical_performance_zones.png)
 
 ---
 
 ### COMPILER OPTIMIZATION IMPACT ANALYSIS
 
-![compiler_optimization_analysis.png](result/compiler_optimization_analysis.png)
+![compiler_optimization_analysis.png](analysis/compiler_optimization_analysis.png)
 
 #### Compiler Optimization Effectiveness
 
@@ -325,5 +325,5 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 ### GENERATING RESEARCH-ORIENTED ANALYSIS REPORT
 
-* Report: [research_analysis_report.md](result/research_analysis_report.md)
-* LaTeX tables: [latex_tables.tex](result/latex_tables.tex)
+* Report: [research_analysis_report.md](analysis/research_analysis_report.md)
+* LaTeX tables: [latex_tables.tex](analysis/latex_tables.tex)

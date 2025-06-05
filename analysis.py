@@ -31,13 +31,13 @@ class SortingAlgorithmAnalyzer:
     def load_data(self):
         """Load all performance data files"""
         try:
-            self.df = pd.read_csv('sorting_performance_results.csv')
-            self.detailed_df = pd.read_csv('detailed_results.csv')
-            self.summary_df = pd.read_csv('performance_summary_table.csv', index_col=[0, 1])
+            self.df = pd.read_csv('result/sorting_performance_results.csv')
+            self.detailed_df = pd.read_csv('result/detailed_results.csv')
+            self.summary_df = pd.read_csv('result/performance_summary_table.csv', index_col=[0, 1])
             print("✓ Data loaded successfully")
             print(f"  - Main results: {len(self.df)} records")
             print(f"  - Detailed results: {len(self.detailed_df)} measurements")
-            os.makedirs('result', exist_ok=True)
+            os.makedirs('analysis', exist_ok=True)
             return True
         except Exception as e:
             print(f"✗ Error loading data: {e}")
@@ -127,7 +127,7 @@ class SortingAlgorithmAnalyzer:
         plt.suptitle('Theoretical vs Empirical Complexity Analysis',
                      fontsize=16, fontweight='bold')
         plt.tight_layout()
-        plt.savefig('result/theory_vs_practice_analysis.png', dpi=300, bbox_inches='tight')
+        plt.savefig('theory_vs_practice_analysis.png', dpi=300, bbox_inches='tight')
         plt.show()
 
         # Print detailed analysis
@@ -236,7 +236,7 @@ class SortingAlgorithmAnalyzer:
         ax2.grid(True, alpha=0.3)
 
         plt.tight_layout()
-        plt.savefig('result/cache_effects_analysis.png', dpi=300, bbox_inches='tight')
+        plt.savefig('cache_effects_analysis.png', dpi=300, bbox_inches='tight')
         plt.show()
 
         # Analyze cache-friendly vs cache-unfriendly behavior
@@ -399,7 +399,7 @@ class SortingAlgorithmAnalyzer:
         plt.suptitle('Practical Performance Zones and Algorithm Selection Guide',
                      fontsize=16, fontweight='bold')
         plt.tight_layout()
-        plt.savefig('result/practical_performance_zones.png', dpi=300, bbox_inches='tight')
+        plt.savefig('practical_performance_zones.png', dpi=300, bbox_inches='tight')
         plt.show()
 
         return crossover_points, sensitivity_scores
@@ -502,7 +502,7 @@ class SortingAlgorithmAnalyzer:
                 bar.set_color('red')
 
         plt.tight_layout()
-        plt.savefig('result/compiler_optimization_analysis.png', dpi=300, bbox_inches='tight')
+        plt.savefig('compiler_optimization_analysis.png', dpi=300, bbox_inches='tight')
         plt.show()
 
         # Print optimization effectiveness summary
@@ -615,10 +615,10 @@ class SortingAlgorithmAnalyzer:
                       "of algorithmic choices\n\n")
 
         # Save report
-        with open('result/research_analysis_report.md', 'w') as f:
+        with open('research_analysis_report.md', 'w') as f:
             f.writelines(report)
 
-        print("✓ Research-oriented report saved to 'result/research_analysis_report.md'")
+        print("✓ Research-oriented report saved to 'research_analysis_report.md'")
 
         # Also generate LaTeX-ready tables for academic publication
         self._generate_latex_tables()
@@ -652,10 +652,10 @@ class SortingAlgorithmAnalyzer:
         latex_tables.append("\\end{table}\n\n")
 
         # Save LaTeX tables
-        with open('result/latex_tables.tex', 'w') as f:
+        with open('latex_tables.tex', 'w') as f:
             f.writelines(latex_tables)
 
-        print("✓ LaTeX tables saved to 'result/latex_tables.tex'")
+        print("✓ LaTeX tables saved to 'latex_tables.tex'")
 
 
 if __name__ == "__main__":

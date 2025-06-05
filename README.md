@@ -324,4 +324,4 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 ### GENERATING RESEARCH-ORIENTED ANALYSIS REPORT
 
 * Report: [research_analysis_report.md](result/research_analysis_report.md)
-* LaTeX tables: [latex_tables](result/latex_tables)
+* LaTeX tables: [latex_tables.tex](result/latex_tables.tex)

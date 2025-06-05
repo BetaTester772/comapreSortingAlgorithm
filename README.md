@@ -25,8 +25,9 @@ English Writing(GEDG001) class
     uv run monitor.py
     ```
 
-**Note**: if you want to get test_datasets_full.txt, you can just use `git clone` command. But, sometimes, you must use
-`git-lfs` and run `git lfs pull` after cloning the repository.
+**Note**: If you want to get test_datasets_full.txt, you can just use `git clone` command. But, sometimes, you must use
+`git-lfs` and run `git lfs pull` after cloning the repository. Here is the link to
+the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 
 ## algorithms
 

@@ -183,9 +183,9 @@ class SortingAlgorithmAnalyzer:
 
         # Add typical cache size markers
         cache_sizes = {
-                'L1': 32 * 1024 / 4,  # 32KB L1 cache / 4 bytes per int
-                'L2': 256 * 1024 / 4,  # 256KB L2 cache / 4 bytes per int
-                'L3': 2048 * 1024 / 4  # 2MB L3 cache / 4 bytes per int
+                'L1': 64 * 1024 / 4,  # 64KB L1 cache / 4 bytes per int
+                'L2': (1 * 1024) * 1024 / 4,  # 1MB L2 cache / 4 bytes per int
+                'L3': (32 * 1024) * 1024 / 4  # 32MB L3 cache / 4 bytes per int
         }
 
         for cache_name, size in cache_sizes.items():
@@ -546,9 +546,9 @@ class SortingAlgorithmAnalyzer:
 
         # Identify cache transition points
         cache_boundaries = {
-                'L1 boundary': 8000,  # ~32KB
-                'L2 boundary': 65000,  # ~256KB
-                'L3 boundary': 500000  # ~2MB
+                'L1 boundary': 16384,  # 64KB / 4B
+                'L2 boundary': 262144,  # 1MB / 4B
+                'L3 boundary': 8388608  # 32MB / 4B
         }
 
         report.append("- **Cache transition points identified**:\n")

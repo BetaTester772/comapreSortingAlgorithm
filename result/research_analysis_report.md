@@ -14,9 +14,9 @@ Our empirical analysis reveals significant deviations between theoretical comple
 Analysis of performance transitions reveals cache boundary effects:
 
 - **Cache transition points identified**:
-  - L1 boundary: ~8,000 elements
-  - L2 boundary: ~65,000 elements
-  - L3 boundary: ~500,000 elements
+  - L1 boundary: ~16,384 elements
+  - L2 boundary: ~262,144 elements
+  - L3 boundary: ~8,388,608 elements
 
 - **Cache-friendly algorithms**: Insertion Sort shows superior cache locality for small datasets
 - **Cache-unfriendly algorithms**: Merge Sort suffers from auxiliary array overhead

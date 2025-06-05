@@ -32,10 +32,10 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 
 ## SORTING ALGORITHMS
 
-- Insertion Sort
-- Selection Sort
-- Merge Sort
-- Quick Sort
+- [Insertion Sort](sorting_algorithms/insertion_sort.cpp)
+- [Selection Sort](sorting_algorithms/selection_sort.cpp)
+- [Merge Sort](sorting_algorithms/merge_sort.cpp)
+- [Quick Sort](sorting_algorithms/quick_sort.cpp)
 
 ## TEST PROPERTIES
 
@@ -45,9 +45,12 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 
 ## TEST ENVIRONMENT
 
-- **CPT**: VM.Standard.A1.flex
-- **OS**: Ubuntu 24.04
-- **GCC**: 13.3.0
+- **CPU**:
+  VM.Standard.A1.Flex([Altra processor from Ampere](https://amperecomputing.com/briefs/ampere-altra-family-product-brief))
+- **Architecture**: ARM64
+- **OS**: Ubuntu 24.04.2 LTS
+- **Kernel**: Linux 6.8.0-1026-oracle
+- **GCC**: 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04)
 
 ## [TEST RESULTS](result/monitor_py_output.txt)
 

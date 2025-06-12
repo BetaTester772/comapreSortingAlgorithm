@@ -43,13 +43,22 @@ class SortingAlgorithmAnalyzer:
             print(f"✗ Error loading data: {e}")
             return False
 
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression
+
     def analyze_theory_vs_practice_gap(self):
         """
-        Analyze the gap between theoretical complexity and empirical performance,
-        addressing the core research question about real-world deviations
+        Quick/merge 구간만 y축을 선형 스케일로 바꿔서
+        QuickSort가 실제로 더 빠른 모습을 분명히 보여주도록 함.
+        다른 알고리즘(insert/selection)은 기존 로그-로그 방식을 유지합니다.
         """
         print("\n" + "=" * 80)
-        print("THEORY VS PRACTICE: EMPIRICAL COMPLEXITY ANALYSIS")
+        print("THEORY VS PRACTICE: EMPIRICAL COMPLEXITY ANALYSIS (modified y-scale)")
         print("=" * 80)
 
         fig, axes = plt.subplots(2, 2, figsize=(16, 12))
@@ -58,10 +67,10 @@ class SortingAlgorithmAnalyzer:
         algorithms = self.df['algorithm'].unique()
         complexity_results = {}
         theoretical_complexity = {
-                'insertion_sort': 2.0,  # O(n²)
-                'selection_sort': 2.0,  # O(n²)
-                'merge_sort'    : 1.0,  # O(n log n) ≈ O(n^1.0) for log-log plot
-                'quick_sort'    : 1.0  # O(n log n) ≈ O(n^1.0) for log-log plot
+                'insertion_sort': 2.0,
+                'selection_sort': 2.0,
+                'merge_sort'    : 1.0,
+                'quick_sort'    : 1.0
         }
 
         for idx, algo in enumerate(algorithms):
@@ -69,81 +78,138 @@ class SortingAlgorithmAnalyzer:
             algo_data = self.df[(self.df['algorithm'] == algo) &
                                 (self.df['distribution'] == 'random')]
 
-            if not algo_data.empty:
-                # Prepare data for regression
-                X = algo_data['size'].values.reshape(-1, 1)
-                y = algo_data['avg_time_ns'].values
+            if algo_data.empty:
+                continue
 
-                # Log-log transformation
-                log_X = np.log10(X)
-                log_y = np.log10(y)
+            X = algo_data['size'].values.reshape(-1, 1)
+            y = algo_data['avg_time_ns'].values
+            log_y = np.log10(y)
 
-                # Linear regression on log-log data
+            if algo in ('merge_sort', 'quick_sort'):
+                # log(n·log n) 회귀를 수행
+                log_feature = np.log10(X * np.log(X))
                 reg = LinearRegression()
-                reg.fit(log_X, log_y)
+                reg.fit(log_feature, log_y)
+
                 empirical_slope = reg.coef_[0]
                 intercept = reg.intercept_
-                r2 = reg.score(log_X, log_y)
-
-                # Calculate deviation from theoretical
+                r2 = reg.score(log_feature, log_y)
                 theoretical_slope = theoretical_complexity[algo]
                 deviation = abs(empirical_slope - theoretical_slope) / theoretical_slope * 100
+                constant_factor = 10 ** intercept
 
-                # Store results
                 complexity_results[algo] = {
                         'empirical_slope'  : empirical_slope,
                         'theoretical_slope': theoretical_slope,
                         'deviation_percent': deviation,
                         'intercept'        : intercept,
                         'r2'               : r2,
-                        'constant_factor'  : 10 ** intercept  # c in T(n) = c * n^k
+                        'constant_factor'  : constant_factor
                 }
 
-                # Plot actual vs theoretical
-                ax.scatter(X, y, alpha=0.6, label='Empirical', s=100, color='blue')
+                # --- 1) 실제 산점도(데이터 점) ---
+                ax.scatter(X, y, alpha=0.6, label='Empirical', s=50, color='blue')
 
-                # Plot empirical fit
-                X_pred = np.logspace(2, 6, 100).reshape(-1, 1)
-                y_pred_empirical = 10 ** (reg.predict(np.log10(X_pred)))
-                ax.plot(X_pred, y_pred_empirical, 'b-', linewidth=2,
-                        label=f'Empirical: O(n^{empirical_slope:.2f})')
+                # --- 2) Empirical fit: O((n·log n)^k) ---
+                n_min, n_max = X.min(), X.max()
+                X_pred = np.logspace(np.log10(n_min), np.log10(n_max), 200).reshape(-1, 1)
+                log_feature_pred = np.log10(X_pred * np.log(X_pred))
+                log_y_pred_emp = reg.predict(log_feature_pred)
+                y_pred_emp = 10 ** log_y_pred_emp
+                ax.plot(X_pred, y_pred_emp, 'b-', linewidth=2,
+                        label=f'Empirical fit: O((n·log n)^{empirical_slope:.2f})')
 
-                # Plot theoretical prediction
-                y_pred_theoretical = 10 ** intercept * (X_pred.ravel() ** theoretical_slope)
+                # --- 3) Theoretical curve: O(n·log n) with same 상수 c ---
+                feature_pred_nlogn = X_pred.ravel() * np.log(X_pred.ravel())
+                y_pred_theoretical = constant_factor * feature_pred_nlogn
                 ax.plot(X_pred, y_pred_theoretical, 'r--', linewidth=2,
-                        label=f'Theoretical: O(n^{theoretical_slope:.1f})')
+                        label='Theoretical: c·n·log n')
 
-                # Formatting
+                # --- 4) 축을 x축만 로그, y축은 선형으로 설정 ---
                 ax.set_xscale('log')
-                ax.set_yscale('log')
+                ax.set_yscale('linear')
+
                 ax.set_xlabel('Dataset Size (n)', fontsize=11)
-                ax.set_ylabel('Time (nanoseconds)', fontsize=11)
-                ax.set_title(f'{algo.replace("_", " ").title()}\n'
-                             f'Theory-Practice Gap: {deviation:.1f}%',
+                ax.set_ylabel('Time (ns)', fontsize=11)
+                ax.set_title(f'{algo.replace("_", " ").title()} (linear y-scale)\n'
+                             f'Gap: {deviation:.1f}%   R²={r2:.3f}',
                              fontsize=12, fontweight='bold')
                 ax.legend()
                 ax.grid(True, alpha=0.3)
 
-        plt.suptitle('Theoretical vs Empirical Complexity Analysis',
+            else:
+                # insertion_sort / selection_sort: 기존 대로 log-log 회귀
+                log_X = np.log10(X)
+                reg = LinearRegression()
+                reg.fit(log_X, log_y)
+
+                empirical_slope = reg.coef_[0]
+                intercept = reg.intercept_
+                r2 = reg.score(log_X, log_y)
+                theoretical_slope = theoretical_complexity[algo]
+                deviation = abs(empirical_slope - theoretical_slope) / theoretical_slope * 100
+                constant_factor = 10 ** intercept
+
+                complexity_results[algo] = {
+                        'empirical_slope'  : empirical_slope,
+                        'theoretical_slope': theoretical_slope,
+                        'deviation_percent': deviation,
+                        'intercept'        : intercept,
+                        'r2'               : r2,
+                        'constant_factor'  : constant_factor
+                }
+
+                ax.scatter(X, y, alpha=0.6, label='Empirical', s=50, color='blue')
+
+                n_min, n_max = X.min(), X.max()
+                X_pred = np.logspace(np.log10(n_min), np.log10(n_max), 200).reshape(-1, 1)
+                log_y_pred_emp = reg.predict(np.log10(X_pred))
+                y_pred_emp = 10 ** log_y_pred_emp
+                ax.plot(X_pred, y_pred_emp, 'b-', linewidth=2,
+                        label=f'Empirical: O(n^{empirical_slope:.2f})')
+
+                y_pred_theoretical = constant_factor * (X_pred.ravel() ** theoretical_slope)
+                ax.plot(X_pred, y_pred_theoretical, 'r--', linewidth=2,
+                        label=f'Theoretical: O(n^{theoretical_slope:.1f})')
+
+                ax.set_xscale('log')
+                ax.set_yscale('log')
+                ax.set_xlabel('Dataset Size (n)', fontsize=11)
+                ax.set_ylabel('Time (ns)', fontsize=11)
+                ax.set_title(f'{algo.replace("_", " ").title()} (log-log scale)\n'
+                             f'Gap: {deviation:.1f}%   R²={r2:.3f}',
+                             fontsize=12, fontweight='bold')
+                ax.legend()
+                ax.grid(True, alpha=0.3)
+
+        plt.suptitle('Theoretical vs Empirical Complexity Analysis (Modified)',
                      fontsize=16, fontweight='bold')
-        plt.tight_layout()
+        plt.tight_layout(rect=[0, 0, 1, 0.95])
         plt.savefig('theory_vs_practice_analysis.png', dpi=300, bbox_inches='tight')
         plt.show()
 
-        # Print detailed analysis
+        # --- 콘솔 출력 ---
         print("\nComplexity Analysis Summary:")
         print("-" * 80)
-        print(f"{'Algorithm':<20} {'Theoretical':<12} {'Empirical':<12} {'Gap':<10} {'R²':<8} {'Constant Factor':<15}")
+        header = f"{'Algorithm':<20} {'Theory':<14} {'Empirical':<14} {'Gap':<10} {'R²':<8} {'Const (c)':<12}"
+        print(header)
         print("-" * 80)
 
         for algo, results in complexity_results.items():
-            print(f"{algo:<20} "
-                  f"O(n^{results['theoretical_slope']:.1f})      "
-                  f"O(n^{results['empirical_slope']:.2f})      "
-                  f"{results['deviation_percent']:>6.1f}%    "
-                  f"{results['r2']:.4f}   "
-                  f"{results['constant_factor']:.2e}")
-
+            if algo in ('merge_sort', 'quick_sort'):
+                print(f"{algo:<20} "
+                      f"O(n·log n)   "
+                      f"O((n·log n)^{results['empirical_slope']:.2f})   "
+                      f"{results['deviation_percent']:>6.1f}%   "
+                      f"{results['r2']:.4f}   "
+                      f"{results['constant_factor']:>.2e}")
+            else:
+                print(f"{algo:<20} "
+                      f"O(n^{results['theoretical_slope']:.1f})   "
+                      f"O(n^{results['empirical_slope']:.2f})   "
+                      f"{results['deviation_percent']:>6.1f}%   "
+                      f"{results['r2']:.4f}   "
+                      f"{results['constant_factor']:>.2e}")
         return complexity_results
 
     def analyze_cache_effects(self):

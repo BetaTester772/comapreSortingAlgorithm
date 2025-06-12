@@ -34,7 +34,7 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 - [Insertion Sort](sorting_algorithms/insertion_sort.cpp)
 - [Selection Sort](sorting_algorithms/selection_sort.cpp)
 - [Merge Sort](sorting_algorithms/merge_sort.cpp)
-- [Quick Sort](sorting_algorithms/quick_sort.cpp)
+- [Quick Sort](sorting_algorithms/quick_sort.cpp) - Random Pivot
 
 ## TEST PROPERTIES
 
@@ -51,13 +51,15 @@ the [git-lfs](https://git-lfs.github.com/) if you don't have it installed.
 - **Kernel**: Linux 6.8.0-1026-oracle
 - **GCC**: 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04)
 
-## [TEST RESULTS](analysis/monitor_py_output.txt)
+## [TEST RESULTS](result/monitor_py_output.txt)
 
 full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 ### STATISTICAL ANALYSIS USING PANDAS
 
 #### 1. Overall Performance Statistics (microseconds)
+
+![fig2_overall_performance.png](result/fig2_overall_performance.png)
 
 | algorithm       | mean      | std       | min  | max        |
 |-----------------|-----------|-----------|------|------------|
@@ -77,6 +79,8 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 | 1000000 | 1028272.0       | 104775201.0 | 59834004.0  | NaN             |
 
 #### 3. Performance by Data Distribution (nanoseconds)
+
+![fig4_distribution_impact.png](result/fig4_distribution_impact.png)
 
 | distribution    | insertion\_sort | merge\_sort | quick\_sort | selection\_sort |
 |-----------------|-----------------|-------------|-------------|-----------------|
@@ -139,6 +143,8 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 ---
 
 ### PERFORMANCE SUMMARY TABLE (Average Time in Nanoseconds)
+
+![fig3_scaling_performance.png](result/fig3_scaling_performance.png)
 
 | size    | distribution    | insertion\_sort | merge\_sort | quick\_sort | selection\_sort |
 |---------|-----------------|-----------------|-------------|-------------|-----------------|
@@ -267,63 +273,3 @@ full log of [monitor.py](monitor.py) is available in [out.log](out.log)
 
 1. quick\_sort 49.014 ms
 2. merge\_sort 83.671 ms
-
----
-
-## [TEST ANALYSIS](analysis/analysis_py_output.txt)
-
-### THEORY VS PRACTICE: EMPIRICAL COMPLEXITY ANALYSIS
-
-![theory_vs_practice_analysis.png](analysis/theory_vs_practice_analysis.png)
-
-#### Complexity Analysis Summary
-
-| Algorithm       | Theoretical | Empirical | Gap  | R²     | Constant Factor |
-|-----------------|-------------|-----------|------|--------|-----------------|
-| merge\_sort     | O(n^1.0)    | O(n^1.04) | 3.9% | 0.9999 | 8.27e+01        |
-| quick\_sort     | O(n^1.0)    | O(n^1.06) | 6.5% | 0.9999 | 3.40e+01        |
-| insertion\_sort | O(n^2.0)    | O(n^1.94) | 3.0% | 0.9997 | 3.11e-01        |
-| selection\_sort | O(n^2.0)    | O(n^2.00) | 0.1% | 1.0000 | 9.89e-01        |
-
----
-
-### CACHE EFFECTS AND MEMORY LOCALITY ANALYSIS
-
-![cache_effects_analysis.png](analysis/cache_effects_analysis.png)
-
-#### Cache Efficiency Summary
-
-| Algorithm       | Efficiency Degradation | Type           |
-|-----------------|------------------------|----------------|
-| merge\_sort     | -42.0%                 | Cache-friendly |
-| quick\_sort     | -30.2%                 | Cache-friendly |
-| insertion\_sort | -23.8%                 | Cache-friendly |
-| selection\_sort | NaN                    | Cache-friendly |
-
----
-
-### PRACTICAL PERFORMANCE ZONES FOR ALGORITHM SELECTION
-
-![practical_performance_zones.png](analysis/practical_performance_zones.png)
-
----
-
-### COMPILER OPTIMIZATION IMPACT ANALYSIS
-
-![compiler_optimization_analysis.png](analysis/compiler_optimization_analysis.png)
-
-#### Compiler Optimization Effectiveness
-
-| Algorithm       | Scaling Efficiency | Comment        |
-|-----------------|--------------------|----------------|
-| insertion\_sort | 117.02%            | Well optimized |
-| merge\_sort     | 121.64%            | Well optimized |
-| quick\_sort     | 115.19%            | Well optimized |
-| selection\_sort | 99.35%             | Well optimized |
-
----
-
-### GENERATING RESEARCH-ORIENTED ANALYSIS REPORT
-
-* Report: [research_analysis_report.md](analysis/research_analysis_report.md)
-* LaTeX tables: [latex_tables.tex](analysis/latex_tables.tex)

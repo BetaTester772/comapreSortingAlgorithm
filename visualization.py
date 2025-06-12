@@ -5,9 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.patches import Rectangle
-import matplotlib.patches as mpatches
-
-os.chdir("result")
 
 # Set style for academic paper quality
 plt.style.use('seaborn-v0_8-whitegrid')
@@ -18,7 +15,7 @@ colors = {
         'insertion_sort': '#FF6B6B',  # 선명한 빨간색
         'selection_sort': '#4ECDC4',  # 청록색
         'merge_sort'    : '#7B68EE',  # 보라색
-        'quick_sort'    : '#FFD700'   # 골드색
+        'quick_sort'    : '#FFD700'  # 골드색
 }
 
 
